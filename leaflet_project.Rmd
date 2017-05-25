@@ -1,0 +1,50 @@
+---
+title: "leaflet_project"
+author: "Serafín Moral García"
+date: "25 de mayo de 2017"
+output: html_document
+---
+
+```{r}
+library(leaflet)
+```
+
+## Overview
+
+In this work we show a map with five of the most tematic parks in Spain, my country. 
+
+## Map
+
+In fisrt place we store the coordinates of the places
+
+```{r}
+longitudes <- c(-6.079559, -2.344208,  -0.454559, -3.882294, 1.127472)
+latitudes <- c(37.091473, 37.009859, 39.505233, 40.280705, 41.311985)
+coordinates <- cbind(longitudes, latitudes)
+```
+
+Now we store the names os the places, as well as their urls. 
+
+```{r}
+names <- c("Isla_Magica","Oasys MiliHolibud", "Aquopolis", "Parque de Atracciones de Madrid", "PorAventura")
+urls <- c("https://www.islamagica.es/","https://www.oasysparquetematico.com/","https://cullera.aquopolis.es/","https://parquedeatracciones.es/","https://www.portaventuraworld.com/") 
+
+places <- paste("<a href=", urls, ">", names,"</a>" ,sep = "")
+```
+
+Now we generate our icons, taken from the indicated URL. 
+
+```{r}
+icons <- makeIcon(
+  iconUrl = "https://people.ucsc.edu/~admcnich/images/pin.svg",
+  iconWidth = 32, iconHeight = 30,
+  iconAnchorX = 18, iconAnchorY = 30
+)
+```
+
+Once we have done all the previous steps we can generate our final map. 
+
+```{r cars}
+coordinates %>% leaflet() %>% addTiles() %>%
+addMarkers(icon=icons, popup = places)
+```
